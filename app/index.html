@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Телефонная книжка</title>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- build:css css/bootstrap.min.css -->
+    	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- endbuild -->
+
+	<!-- build:css css/styles.css -->
+    	<link rel="stylesheet" type="text/css" href="css/styles.css">
+    	<link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css">
+    <!-- endbuild -->
+	
+</head>
+<body ng-app="phoneBook">
+
+	<div class="main container text-center">
+		<h1 class="title">{{title}}</h1>
+		<div class="bar clearfix">
+			<div class="bar-left text-left pull-left">
+				<a class="btn" ng-show="pageName == 'index'" ng-href="#/add">Добавить</a>
+				<a class="ico ico-back" ng-show="pageName != 'index'" ng-href="#/"></a>
+			</div>
+			<div class="bar-right text-right pull-right" ng-init="listTable = true" ng-show="pageName == 'index'">
+				<div class="ico ico-list" ng-class="{'active': listTable}" ng-click="listTable = true"></div>
+				<div class="ico ico-plit" ng-class="{'active': !listTable}" ng-click="listTable = false"></div>
+			</div>
+		</div>
+		
+		<div class="view text-left" ng-view></div>	
+	</div>
+
+	<!-- build:js js/vendor.js -->
+	    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+	    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+	    <script type="text/javascript" src="bower_components/firebase/firebase.js"></script>
+	    <script type="text/javascript" src="bower_components/angularfire/dist/angularfire.min.js"></script>
+	<!-- endbuild -->
+	<!-- build:js js/combined.js -->
+	    <script type="text/javascript" src="js/book.js"></script>
+	<!-- endbuild -->
+</body>
+</html>

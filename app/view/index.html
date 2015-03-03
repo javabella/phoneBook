@@ -1,0 +1,27 @@
+<table class="table table-hover" ng-show="listTable">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Телефон</th>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in data">
+			<td>{{ $index+1 }}</td>
+			<td>{{ item.name }}</td>
+			<td>{{ item.lastname }}</td>
+			<td>{{ item.tel }}</td>
+			<td>{{ item.email }}</td>
+		</tr>
+	</tbody>
+</table>
+<ul class="list-inline" ng-show="!listTable">
+	<li class="text-center" ng-repeat="item in data" >
+		<img class="thumb-user-pic img-rounded" src="" alt="">
+		<p>{{ item.name + " " + item.lastname }}</p>
+		<p>{{ item.tel }}</p>
+	</li>
+</ul>

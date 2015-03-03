@@ -1,0 +1,320 @@
+@font-face {
+    font-family: "SegoeUIRegular";
+    font-style: normal;
+    font-weight: normal;
+
+    src: url("../fonts/SegoeUIRegular.eot");
+    src: url("../fonts/SegoeUIRegular.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/SegoeUIRegular.woff") format("woff"),
+    url("../fonts/SegoeUIRegular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SegoeUIBold";
+    font-style: normal;
+    font-weight: normal;
+
+    src: url("../fonts/SegoeUIBold.eot");
+    src: url("../fonts/SegoeUIBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/SegoeUIBold.woff") format("woff"),
+    url("../fonts/SegoeUIBold.ttf") format("truetype");
+}
+
+.ico {
+    display: inline-block;
+
+    vertical-align: middle;
+
+    background: url("../img/spritebox-sprite.png");
+}
+
+.ico.ico-back:hover,
+.ico.ico-back:active,
+.ico.ico-back:focus,
+.ico.ico-back.active {
+    width: 26px;
+    height: 26px;
+
+    outline: none;
+    background-position: -0 -0;
+}
+
+.ico.ico-back {
+    width: 26px;
+    height: 26px;
+
+    background-position: -26px -0;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.ico.ico-plit:hover,
+.ico.ico-plit:active,
+.ico.ico-plit:focus,
+.ico.ico-plit.active {
+    width: 25px;
+    height: 25px;
+
+    outline: none;
+    background-position: -0 -26px;
+}
+
+.ico.ico-plit {
+    width: 25px;
+    height: 25px;
+    margin-right: 3px;
+
+    cursor: pointer;
+
+    background-position: -25px -26px;
+}
+
+.ico.ico-list {
+    width: 28px;
+    height: 20px;
+    margin-top: 1px;
+    margin-right: 23px;
+
+    cursor: pointer;
+
+    background-position: -52px -0;
+}
+
+.ico.ico-list:hover,
+.ico.ico-list:active,
+.ico.ico-list:focus,
+.ico.ico-list.active {
+    width: 28px;
+    height: 20px;
+
+    outline: none;
+    background-position: -52px -20px;
+}
+
+.ico.ico-phone {
+    width: 16px;
+    height: 16px;
+
+    background-position: -0 -51px;
+}
+
+.ico.ico-mail {
+    width: 14px;
+    height: 10px;
+
+    background-position: -52px -40px;
+}
+
+html,
+body,
+div,
+p,
+ul,
+li {
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: SegoeUIRegular, sans-serif;
+
+    background: url("../img/bg.jpg") no-repeat center center white;
+    -o-background-size: cover;
+       background-size: cover;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 802px;
+    height: 450px;
+    padding: 0;
+    margin: auto;
+}
+
+.view {
+    width: 800px;
+    height: 356px;
+    padding: 21px 10px 0px;
+    overflow: auto;
+
+    border: 1px solid rgb(221, 221, 221);
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    background: rgba(255, 255, 255, .741);
+}
+
+.title {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    font-size: 24px;
+    line-height: 1.542;
+
+    text-transform: uppercase;
+
+    color: black;
+}
+
+.btn {
+    display: inline-block;
+    width: 117px;
+    height: 36px;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    cursor: pointer;
+    vertical-align: middle;
+
+    color: rgb(51, 51, 51);
+    border: 1px solid rgb(204, 204, 204);
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    background-color: rgba(255, 255, 255, .741);
+}
+
+
+.btn:hover {
+    background-color: rgba(204, 204, 204, 0.5);
+}
+
+.bar {
+    margin-bottom: 17px;
+}
+
+.bar-left,
+.bar-right,
+.add-left,
+.add-right {
+    width: 50%;
+    height: 100%;
+}
+
+.bar-right {
+    padding-top: 10px;
+}
+
+th {
+    font-family: SegoeUIBold, sans-serif;
+}
+
+.table th:first-child,
+.table td:first-child {
+    width: 9%;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 20%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3),
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 21%;
+}
+
+.table th:last-child,
+.table td:last-child {
+    width: 29%;
+}
+
+.user-pic {
+    width: 200px;
+    height: 200px;
+
+    border: 1px solid rgb(204, 204, 204);
+    -webkit-border-radius: 9px;
+            border-radius: 9px;
+    background-color: rgb(238, 238, 238);
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+form {
+	height: 100%;
+}
+
+.form-btn {
+	width: 91px;
+	height: 31px;
+	line-height: 1.1em;
+}
+
+.add-left {
+	padding: 17px 100px 17px 89px;
+}
+
+.add-right {
+	padding: 12px 94px 12px 27px;
+}
+
+.add-form input {
+	font-size: 12px;
+}
+
+.small-input {
+	height: 30px;
+}
+
+.ig-phone {
+	padding: 5px 11px;
+}
+
+.add-form .input-group > input {
+	height: 29px;
+}
+
+tbody {
+	font-size: 12px;
+}
+
+tbody > tr {
+	cursor: pointer;
+}
+
+.thumb-user-pic {
+	width: 130px;
+	height: 130px;
+
+	border: 1px solid rgb(204, 204, 204);
+	border-radius: 6px;
+	background-color: rgb(238, 238, 238);
+	margin-bottom: 2px;
+}
+
+.list-inline {
+	margin-top: -11px;
+	font-size: 0;
+	padding-left: 4px;
+}
+
+.list-inline li {
+	margin: 0 16px 6px 0;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.list-inline li:nth-child(5n) {
+	margin-right: 0;
+}
+
+.list-inline p {
+	font-size: 12px;
+}
+
+.list-inline li:hover img {
+	border-color: black;
+}
