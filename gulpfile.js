@@ -21,6 +21,8 @@ gulp.task('copy', function() {
 		.pipe(gulp.dest('dist/fonts'));
 	gulp.src('app/img/*')
 		.pipe(gulp.dest('dist/img'));
+	gulp.src('app/favicons/*')
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('connect', function() {
