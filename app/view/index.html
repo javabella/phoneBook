@@ -1,4 +1,4 @@
-<table class="table table-hover" ng-show="listTable">
+<table class="table table-hover" ng-show="listTable" ng-controller="ShowContactCtrl">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -9,7 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in data">
+		<tr ng-repeat="item in data" ng-click="show()"> 
 			<td>{{ $index+1 }}</td>
 			<td>{{ item.name }}</td>
 			<td>{{ item.lastname }}</td>
@@ -18,8 +18,8 @@
 		</tr>
 	</tbody>
 </table>
-<ul class="list-inline" ng-show="!listTable">
-	<li class="text-center" ng-repeat="item in data" >
+<ul class="list-inline" ng-show="!listTable" ng-controller="ShowContactCtrl">
+	<li class="text-center" ng-repeat="item in data" ng-click="show()">
 		<img class="thumb-user-pic img-rounded" src="" alt="">
 		<p>{{ item.name + " " + item.lastname }}</p>
 		<p>{{ item.tel }}</p>

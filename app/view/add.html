@@ -1,30 +1,30 @@
-<form action="" class="add-form">
+<form action="" class="add-form" ng-show="canShow" method="post">
 	<div class="add-left pull-left">
 		<img class="user-pic img-rounded" src="" alt="">
-		<input class="btn form-btn pull-left" type="submit" value="Сохранить">
-		<input class="btn form-btn pull-right" type="reset" value="Удалить">
+		<input class="btn form-btn pull-left" type="button" value="Сохранить" ng-click="saveContact()">
+		<input class="btn form-btn pull-right" type="reset" value="Удалить" ng-click="removeContact()">
 	</div>
 	<div class="add-right pull-right">
 		<div class="form-group">
 		    <label for="f-name">Имя</label>
-		    <input type="text" class="form-control" name="name" id="f-name" placeholder="Имя контакта">
+		    <input ng-model="contactName" type="text" class="form-control" name="name" id="f-name" placeholder="Имя контакта">
 		</div>
 		<div class="form-group">
 		    <label for="f-lastname">Фамилия</label>
-		    <input type="text" class="form-control" name="lastname" id="f-lastname" placeholder="Фамилия контакта">
+		    <input ng-model="contactLastName" type="text" class="form-control" name="lastname" id="f-lastname" placeholder="Фамилия контакта">
 		</div>
 		<div class="form-group">
 		    <label for="f-mail">Контактная информация</label>
 		    <div class="input-group">
 				<span class="input-group-addon"><div class="ico ico-mail"></div></span>
-				<input type="text" class="form-control" name="mail" id="f-mail" placeholder="yourmail@gmail.com">
+				<input ng-model="contactEmail" type="text" class="form-control" name="mail" id="f-mail" placeholder="yourmail@gmail.com">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="f-tel" class="sr-only">Телефон</label>
 			<div class="input-group">
 				<span class="input-group-addon ig-phone"><div class="ico ico-phone"></div></span>
-				<input type="text" class="form-control" name="tel" id="f-tel" placeholder="Телефон">
+				<input ng-model="contactTel" type="text" class="form-control" name="tel" id="f-tel" placeholder="Телефон">
 			</div>
 		</div>
 	</div>
