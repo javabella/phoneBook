@@ -20,7 +20,7 @@
 </table>
 <ul class="list-inline" ng-show="!listTable" ng-controller="ShowContactCtrl">
 	<li class="text-center" ng-repeat="item in data" ng-click="show()">
-		<img class="thumb-user-pic img-rounded" src="" alt="">
+		<img class="thumb-user-pic img-rounded" ng-src="./server/php/files/thumbnail/{{item.img}}" alt="">
 		<p>{{ item.name + " " + item.lastname }}</p>
 		<p>{{ item.tel }}</p>
 	</li>

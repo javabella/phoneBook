@@ -21,9 +21,18 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- build:css css/bootstrap.min.css -->
+    <!-- build:css css/vendor.css -->
     	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    	<link rel="stylesheet" type="text/css" href="bower_components/jquery-file-upload/css/jquery.fileupload.css">
+    	<link rel="stylesheet" type="text/css" href="bower_components/jquery-file-upload/css/jquery.fileupload-ui.css">
     <!-- endbuild -->
+
+    <noscript>
+    <!-- build:css css/noscript.css -->
+    	<link rel="stylesheet" type="text/css" href="bower_components/jquery-file-upload/css/jquery.fileupload-noscript.css">
+    	<link rel="stylesheet" type="text/css" href="bower_components/jquery-file-upload/css/jquery.fileupload-ui-noscript.css">
+    <!-- endbuild -->	
+    </noscript>
 
 	<!-- build:css css/styles.css -->
     	<link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -35,7 +44,7 @@
 
 	<div class="main container text-center">
 		<h1 class="title" ng-cloak>{{title}}</h1>
-		<div class="bar clearfix">
+		<div class="bar clearfix" ng-cloak>
 			<div class="bar-left text-left pull-left">
 				<a class="btn" ng-show="pageName == 'index'" ng-href="#/add">Добавить</a>
 				<a class="ico ico-back" ng-show="pageName != 'index'" ng-href="#/"></a>
@@ -50,11 +59,22 @@
 	</div>
 
 	<!-- build:js js/vendor.js -->
+	    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
 	    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
 	    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
 	    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
 	    <script type="text/javascript" src="bower_components/firebase/firebase.js"></script>
 	    <script type="text/javascript" src="bower_components/angularfire/dist/angularfire.min.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+	    <script type="text/javascript" src="bower_components/blueimp-load-image/js/load-image.all.min.js"></script>
+	    <script type="text/javascript" src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.fileupload.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.fileupload-image.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
+	    <script type="text/javascript" src="bower_components/jquery-file-upload/js/jquery.fileupload-angular.js"></script>
+
 	<!-- endbuild -->
 	<!-- build:js js/combined.js -->
 	    <script type="text/javascript" src="js/book.js"></script>

@@ -1,9 +1,18 @@
-<form action="" class="add-form" ng-show="canShow" method="post">
+<form action="" class="add-form" ng-show="canShow" method="post" id="fileupload" data-file-upload="options" enctype="multipart/form-data">
+
 	<div class="add-left pull-left">
-		<img class="user-pic img-rounded" src="" alt="">
+		<img class="user-pic canvas" src="" alt="" ng-show="queue.length == 0" ng-src="./server/php/files/thumbnail/{{contactNewImg}}">
+		<div class="preview user-pic" data-file-upload-preview="queue[queue.length-1]"></div>
+		
+		<span class="btn fileinput-button form-add-btn" ng-class="{disabled: disabled}" ng-click="getQueue(queue)">
+            <span>Добавить картинку...</span>
+            <input type="file" name="files[]" ng-disabled="disabled" accept="image/*">
+        </span>
 		<input class="btn form-btn pull-left" type="button" value="Сохранить" ng-click="saveContact()">
 		<input class="btn form-btn pull-right" type="reset" value="Удалить" ng-click="removeContact()">
 	</div>
+
+
 	<div class="add-right pull-right">
 		<div class="form-group">
 		    <label for="f-name">Имя</label>
@@ -28,5 +37,6 @@
 			</div>
 		</div>
 	</div>
+
 </form>
 

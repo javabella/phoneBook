@@ -233,10 +233,23 @@ th {
 }
 
 .user-pic {
-    display: inline-block;
+    text-align: center;
+}
+
+.user-pic.canvas {
     width: 200px;
     height: 200px;
+}
+
+.user-pic canvas,
+.user-pic.canvas {
+    display: inline-block;
     margin-bottom: 10px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    vertical-align: top;
 
     border: 1px solid rgb(204, 204, 204);
     -webkit-border-radius: 9px;
@@ -322,4 +335,17 @@ tbody > tr {
 
 .list-inline li:hover img {
     border-color: black;
+}
+
+.form-add-btn {
+    width: 100%;
+    height: auto;
+    padding: 1px 0;
+    margin-bottom: 10px;
+
+    font-size: 12px;
+}
+
+.form-add-btn input {
+	height: 100%;
 }
