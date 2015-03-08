@@ -237,10 +237,11 @@ th {
 }
 
 .user-pic.canvas {
-    width: 200px;
-    height: 200px;
+	width: 200px;
+	height: 200px;
 }
 
+.user-pic,
 .user-pic canvas,
 .user-pic.canvas {
     display: inline-block;
@@ -301,8 +302,8 @@ tbody > tr {
 }
 
 .thumb-user-pic {
-    width: 130px;
-    height: 130px;
+    max-width: 130px;
+    max-height: 130px;
     margin-bottom: 2px;
 
     border: 1px solid rgb(204, 204, 204);
@@ -323,6 +324,7 @@ tbody > tr {
 
     cursor: pointer;
     vertical-align: top;
+    width: 140px;
 }
 
 .list-inline li:nth-child(5n) {

@@ -77,10 +77,11 @@ app.controller(
 			$scope.data.$loaded().then(function (data) {
 				$scope.saveContact = function() {
 					data.$add({
-						email : ($scope.contactEmail ? $scope.contactEmail : null),
-						lastname : ($scope.contactLastName ? $scope.contactLastName : null),
-						name : ($scope.contactName ? $scope.contactName : null),
-						tel : ($scope.contactTel ? $scope.contactTel : null)
+						email : ($('#f-mail').val() ? $('#f-mail').val() : null),
+						lastname : ($('#f-lastname').val() ? $('#f-lastname').val() : null),
+						name : ($('#f-name').val() ? $('#f-name').val() : null),
+						tel : ($('#f-tel').val() ? $('#f-tel').val() : null),
+						img : ($scope.contactNewImg ? $scope.contactNewImg : null)
 					}); 
 				};
 			});
@@ -104,14 +105,17 @@ app.controller(
             };
 
             $('#fileupload').bind('fileuploadadd', function (e, data) {
+            	console.log($scope.curQueue);
             	if ($scope.curQueue.length > 0) {
             		$scope.curQueue[0].$cancel();
             	}
+            	data.submit();
             });
 
             $('#fileupload').bind('fileuploaddone', function (e, data) {
             	$scope.curQueue.length = 0;
             	$scope.contactNewImg = data.result.files[0].name;
+            	console.log($scope.contactNewImg);
             });
 
 
@@ -137,20 +141,24 @@ app.controller(
 					$location.path('/add');
 				} else {
 
+					//записываем в переменные чтобы при переходе на другую страницу несохраненные данные стирались
+					//после подключения blueimp.fileupload (!!??)переменные перестали обновляться 
+					//при изменении пользователем значений
+					//так что считываем значения напрямую через .val()
 					$scope.contactName = $scope.contact.name;
 					$scope.contactLastName = $scope.contact.lastname;
 					$scope.contactEmail = $scope.contact.email;
 					$scope.contactTel = $scope.contact.tel;
-					$scope.contactImg = $scope.contact.img;
+					//$scope.contactImg = $scope.contact.img;
 
-					$scope.contactNewImg = $scope.contactImg;
+					$scope.contactNewImg = $scope.contact.img;
 
 					$scope.saveContact = function() {
-						$scope.contact.name = $scope.contactName ? $scope.contactName : null;
-						$scope.contact.lastname = $scope.contactLastName ? $scope.contactLastName : null;
-						$scope.contact.email = $scope.contactEmail ? $scope.contactEmail : null;
-						$scope.contact.tel = $scope.contactTel ? $scope.contactTel : null; 
-						$scope.contact.img = $scope.contactNewImg ? $scope.contactNewImg : $scope.contactImg;
+						$scope.contact.name = $('#f-name').val() ? $('#f-name').val() : null;
+						$scope.contact.lastname = $('#f-lastname').val() ? $('#f-lastname').val() : null;
+						$scope.contact.email = $('#f-mail').val() ? $('#f-mail').val() : null;
+						$scope.contact.tel = $('#f-tel').val() ? $('#f-tel').val() : null; 
+						$scope.contact.img = $scope.contactNewImg ? $scope.contactNewImg : $scope.contact.img;
 
 						data.$save($scope.contact); 
 					};
@@ -169,6 +177,7 @@ app.controller(
             };
 
             $('#fileupload').bind('fileuploadadd', function (e, data) {
+            	console.log($scope.curQueue);
             	if ($scope.curQueue.length > 0) {
             		$scope.curQueue[0].$cancel();
             	}

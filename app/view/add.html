@@ -1,8 +1,8 @@
 <form action="" class="add-form" ng-show="canShow" method="post" id="fileupload" data-file-upload="options" enctype="multipart/form-data">
 
-	<div class="add-left pull-left">
-		<img class="user-pic canvas" src="" alt="" ng-show="queue.length == 0" ng-src="./server/php/files/thumbnail/{{contactNewImg}}">
-		<div class="preview user-pic" data-file-upload-preview="queue[queue.length-1]"></div>
+	<div class="add-left pull-left text-center">
+		<img class="user-pic" ng-class="{'canvas' : !contactNewImg }" ng-show="queue.length == 0" ng-src="./server/php/files/thumbnail/{{contactNewImg}}">
+		<!-- <div class="preview user-pic" data-file-upload-preview="queue[queue.length-1]"></div> -->
 		
 		<span class="btn fileinput-button form-add-btn" ng-class="{disabled: disabled}" ng-click="getQueue(queue)">
             <span>Добавить картинку...</span>
