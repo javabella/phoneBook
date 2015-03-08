@@ -16,12 +16,13 @@ app.service('uploadOptions', ['$rootScope', function ($rootScope) {
         previewMaxWidth: 198,
 	    previewMaxHeight: 198
     };
+
 	return $rootScope.options;
 }]);
 
 app.config(
-	['$routeProvider', 'fileUploadProvider',  
-		function ($routeProvider, fileUploadProvider) {
+	['$routeProvider', 'fileUploadProvider', '$httpProvider', 
+		function ($routeProvider, fileUploadProvider, $httpProvider) {
 			$routeProvider
 				.when('/', {
 					templateUrl: 'view/index.html',
@@ -37,7 +38,7 @@ app.config(
 				})
 				.otherwise({ redirectTo: '/' });
 
-
+			delete $httpProvider.defaults.headers.common['X-Requested-With'];
 			angular.extend(fileUploadProvider.defaults, {
 			    disableImageResize: /Android(?!.*Chrome)|Opera/
 			        .test(window.navigator.userAgent),
@@ -73,15 +74,21 @@ app.controller(
 
 			$scope.data = fbSync.$asArray();
 
-			
+			$scope.con = {
+				contactName : '',
+				contactLastName : '',
+				contactEmail : '',
+				contactTel : ''
+			};
+
 			$scope.data.$loaded().then(function (data) {
 				$scope.saveContact = function() {
 					data.$add({
-						email : ($('#f-mail').val() ? $('#f-mail').val() : null),
-						lastname : ($('#f-lastname').val() ? $('#f-lastname').val() : null),
-						name : ($('#f-name').val() ? $('#f-name').val() : null),
-						tel : ($('#f-tel').val() ? $('#f-tel').val() : null),
-						img : ($scope.contactNewImg ? $scope.contactNewImg : null)
+						email : ($scope.con.contactEmail ? $scope.con.contactEmail : null),
+						lastname : ($scope.con.contactLastName ? $scope.con.contactLastName : null),
+						name : ($scope.con.contactName ? $scope.con.contactName : null),
+						tel : ($scope.con.contactTel ? $scope.con.contactTel : null),
+						img : ($scope.con.contactNewImg ? $scope.con.contactNewImg : null)
 					}); 
 				};
 			});
@@ -114,10 +121,13 @@ app.controller(
 
             $('#fileupload').bind('fileuploaddone', function (e, data) {
             	$scope.curQueue.length = 0;
-            	$scope.contactNewImg = data.result.files[0].name;
-            	console.log($scope.contactNewImg);
+            	$scope.con.contactNewImg = data.result.files[0].name;
             });
 
+            $scope.con.fieldsEmpty = $scope.con.contactName.length == 0 
+            	&& $scope.con.contactLastName.length == 0 
+            	&& $scope.con.contactEmail.length == 0 
+            	&& $scope.con.contactTel.length == 0;
 
 		}
 	]
@@ -125,13 +135,25 @@ app.controller(
 
 app.controller(
 	'ContactCtrl', 
-	['$scope', '$rootScope', 'fbSync', '$routeParams', '$location', 'uploadOptions',
-		function ($scope, $rootScope, fbSync, $routeParams, $location, uploadOptions) {
+	['$scope', '$rootScope', 'fbSync', '$routeParams', '$location', 'uploadOptions', '$http',
+		function ($scope, $rootScope, fbSync, $routeParams, $location, uploadOptions, $http) {
 			$scope.canShow = false;
 			$rootScope.title = 'Контакт';
 			$rootScope.pageName = 'contact';
 
 			$scope.data = fbSync.$asArray();
+
+			$scope.loadingFiles = true;
+            $http.get('server/php/')
+                .then(
+                    function (response) {
+                        $scope.loadingFiles = false;
+                        $scope.queue = response.data.files;
+                    },
+                    function () {
+                        $scope.loadingFiles = false;
+                    }
+                );
 			
 			$scope.data.$loaded().then(function (data) {
 
@@ -140,25 +162,20 @@ app.controller(
 				if (typeof($scope.contact) == 'undefined') { 
 					$location.path('/add');
 				} else {
-
-					//записываем в переменные чтобы при переходе на другую страницу несохраненные данные стирались
-					//после подключения blueimp.fileupload (!!??)переменные перестали обновляться 
-					//при изменении пользователем значений
-					//так что считываем значения напрямую через .val()
-					$scope.contactName = $scope.contact.name;
-					$scope.contactLastName = $scope.contact.lastname;
-					$scope.contactEmail = $scope.contact.email;
-					$scope.contactTel = $scope.contact.tel;
-					//$scope.contactImg = $scope.contact.img;
-
-					$scope.contactNewImg = $scope.contact.img;
+					$scope.con = {
+						contactName : $scope.contact.name,
+						contactLastName : $scope.contact.lastname,
+						contactEmail : $scope.contact.email,
+						contactTel : $scope.contact.tel,
+						contactNewImg : $scope.contact.img
+					};
 
 					$scope.saveContact = function() {
-						$scope.contact.name = $('#f-name').val() ? $('#f-name').val() : null;
-						$scope.contact.lastname = $('#f-lastname').val() ? $('#f-lastname').val() : null;
-						$scope.contact.email = $('#f-mail').val() ? $('#f-mail').val() : null;
-						$scope.contact.tel = $('#f-tel').val() ? $('#f-tel').val() : null; 
-						$scope.contact.img = $scope.contactNewImg ? $scope.contactNewImg : $scope.contact.img;
+						$scope.contact.name = $scope.con.contactName ? $scope.con.contactName : null;
+						$scope.contact.lastname = $scope.con.contactLastName ? $scope.con.contactLastName : null;
+						$scope.contact.email = $scope.con.contactEmail ? $scope.con.contactEmail : null;
+						$scope.contact.tel = $scope.con.contactTel ? $scope.con.contactTel : null; 
+						$scope.contact.img = $scope.con.contactNewImg ? $scope.con.contactNewImg : null;
 
 						data.$save($scope.contact); 
 					};
@@ -169,6 +186,7 @@ app.controller(
 				}
 				
 				$scope.canShow = true;
+				
 
 			});
 
@@ -186,8 +204,10 @@ app.controller(
 
             $('#fileupload').bind('fileuploaddone', function (e, data) {
             	$scope.curQueue.length = 0;
-            	$scope.contactNewImg = data.result.files[0].name;
+            	$scope.con.contactNewImg = data.result.files[0].name;
             });
+
+            
 		}
 	]
 );

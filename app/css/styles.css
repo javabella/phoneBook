@@ -312,6 +312,11 @@ tbody > tr {
     background-color: rgb(238, 238, 238);
 }
 
+.thumb-user-pic.frame {
+	width: 130px;
+	height: 130px;
+}
+
 .list-inline {
     padding-left: 4px;
     margin-top: -11px;
