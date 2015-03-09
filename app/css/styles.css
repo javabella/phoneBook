@@ -338,6 +338,7 @@ tbody > tr {
 
 .list-inline p {
     font-size: 12px;
+    word-break: break-all;
 }
 
 .list-inline li:hover img {

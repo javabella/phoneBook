@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var useref = require('gulp-useref');
 var connect = require('gulp-connect');
 
-gulp.task('default', ['ur', 'copy', 'tempcopy']);
+gulp.task('default', ['ur', 'copy']);
 
 gulp.task('ur', function () {
     var assets = useref.assets();
@@ -23,15 +23,13 @@ gulp.task('copy', function() {
 		.pipe(gulp.dest('dist/img'));
 	gulp.src('app/favicons/*')
 		.pipe(gulp.dest('dist'));
-	gulp.src('app/server/*')
+	gulp.src('app/server/**/**/*')
 		.pipe(gulp.dest('dist/server'));
+	gulp.src('app/server/php/files/.htaccess')
+		.pipe(gulp.dest('dist/server/php/files'))
 	
 });
 
-gulp.task('tempcopy', function(){
-	gulp.src('dist/**/*')
-		.pipe(gulp.dest('/Applications/MAMP/htdocs/dz'));
-});
 
 gulp.task('connect', function() {
   connect.server({

@@ -12,13 +12,49 @@ app.service('fbSync', ['fbRef', '$firebase', function (fbRef, $firebase) {
 
 app.service('uploadOptions', ['$rootScope', function ($rootScope) {
 	$rootScope.options = {
-        url: 'server/php/',
-        previewMaxWidth: 198,
-	    previewMaxHeight: 198
-    };
+		url: 'server/php/',
+		previewMaxWidth: 198,
+		previewMaxHeight: 198
+	};
 
 	return $rootScope.options;
 }]);
+
+app.factory('loadFilesWatcher', ['$http', function ($http) {
+	return function(scope){
+		scope.loadingFiles = true;
+		$http.get('server/php/')
+			.then(
+				function (response) {
+					scope.loadingFiles = false;
+					scope.queue = response.data.files;
+				},
+				function () {
+					scope.loadingFiles = false;
+				}
+			);
+	};
+}]);
+
+app.factory('queueWatcher', ['uploadOptions', function (uploadOptions){
+	return function(scope) {
+		scope.getQueue = function(q) {
+			scope.curQueue = q;
+		};
+
+		$('#fileupload').bind('fileuploadadd', function (e, data) {
+			if (scope.curQueue.length > 0) {
+				scope.curQueue[0].$cancel();
+			}
+			data.submit();
+		});
+
+		$('#fileupload').bind('fileuploaddone', function (e, data) {
+			scope.curQueue.length = 0;
+			scope.con.contactNewImg = data.result.files[0].name;
+		});
+	};
+}])
 
 app.config(
 	['$routeProvider', 'fileUploadProvider', '$httpProvider', 
@@ -40,11 +76,11 @@ app.config(
 
 			delete $httpProvider.defaults.headers.common['X-Requested-With'];
 			angular.extend(fileUploadProvider.defaults, {
-			    disableImageResize: /Android(?!.*Chrome)|Opera/
-			        .test(window.navigator.userAgent),
-			    maxFileSize: 5000000,
-			    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-			    
+				disableImageResize: /Android(?!.*Chrome)|Opera/
+					.test(window.navigator.userAgent),
+				maxFileSize: 5000000,
+				acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+				
 			});
 		}
 	]
@@ -65,8 +101,8 @@ app.controller(
 
 app.controller(
 	'AddCtrl', 
-	['$scope', '$rootScope', 'fbSync', '$location', '$http', 'uploadOptions',
-		function ($scope, $rootScope, fbSync, $location, $http, uploadOptions) {
+	['$scope', '$rootScope', 'fbSync', '$location', 'loadFilesWatcher', 'queueWatcher',
+		function ($scope, $rootScope, fbSync, $location, loadFilesWatcher, queueWatcher) {
 	
 			$scope.canShow = true;
 			$rootScope.title = 'Добавить контакт';
@@ -90,70 +126,28 @@ app.controller(
 						tel : ($scope.con.contactTel ? $scope.con.contactTel : null),
 						img : ($scope.con.contactNewImg ? $scope.con.contactNewImg : null)
 					}); 
+					$location.path('/');
 				};
 			});
 
-
-            $scope.loadingFiles = true;
-            $http.get('server/php/')
-                .then(
-                    function (response) {
-                        $scope.loadingFiles = false;
-                        $scope.queue = response.data.files;
-                    },
-                    function () {
-                        $scope.loadingFiles = false;
-                    }
-                );
-
-
-            $scope.getQueue = function(q) {
-            	$scope.curQueue = q;
-            };
-
-            $('#fileupload').bind('fileuploadadd', function (e, data) {
-            	console.log($scope.curQueue);
-            	if ($scope.curQueue.length > 0) {
-            		$scope.curQueue[0].$cancel();
-            	}
-            	data.submit();
-            });
-
-            $('#fileupload').bind('fileuploaddone', function (e, data) {
-            	$scope.curQueue.length = 0;
-            	$scope.con.contactNewImg = data.result.files[0].name;
-            });
-
-            $scope.con.fieldsEmpty = $scope.con.contactName.length == 0 
-            	&& $scope.con.contactLastName.length == 0 
-            	&& $scope.con.contactEmail.length == 0 
-            	&& $scope.con.contactTel.length == 0;
-
+			loadFilesWatcher($scope);
+			queueWatcher($scope);
 		}
 	]
 );
 
 app.controller(
 	'ContactCtrl', 
-	['$scope', '$rootScope', 'fbSync', '$routeParams', '$location', 'uploadOptions', '$http',
-		function ($scope, $rootScope, fbSync, $routeParams, $location, uploadOptions, $http) {
+	['$scope', '$rootScope', 'fbSync', '$routeParams', '$location', 'queueWatcher', 'loadFilesWatcher',
+		function ($scope, $rootScope, fbSync, $routeParams, $location, queueWatcher, loadFilesWatcher) {
 			$scope.canShow = false;
 			$rootScope.title = 'Контакт';
 			$rootScope.pageName = 'contact';
 
 			$scope.data = fbSync.$asArray();
 
-			$scope.loadingFiles = true;
-            $http.get('server/php/')
-                .then(
-                    function (response) {
-                        $scope.loadingFiles = false;
-                        $scope.queue = response.data.files;
-                    },
-                    function () {
-                        $scope.loadingFiles = false;
-                    }
-                );
+			loadFilesWatcher($scope);
+			queueWatcher($scope);
 			
 			$scope.data.$loaded().then(function (data) {
 
@@ -178,36 +172,17 @@ app.controller(
 						$scope.contact.img = $scope.con.contactNewImg ? $scope.con.contactNewImg : null;
 
 						data.$save($scope.contact); 
+						$location.path('/');
 					};
 
 					$scope.removeContact = function() {
 						data.$remove($scope.contact); 
+						$location.path('/');
 					};
 				}
 				
 				$scope.canShow = true;
-				
-
 			});
-
-			$scope.getQueue = function(q) {
-            	$scope.curQueue = q;
-            };
-
-            $('#fileupload').bind('fileuploadadd', function (e, data) {
-            	console.log($scope.curQueue);
-            	if ($scope.curQueue.length > 0) {
-            		$scope.curQueue[0].$cancel();
-            	}
-            	data.submit();
-            });
-
-            $('#fileupload').bind('fileuploaddone', function (e, data) {
-            	$scope.curQueue.length = 0;
-            	$scope.con.contactNewImg = data.result.files[0].name;
-            });
-
-            
 		}
 	]
 );
