@@ -42,6 +42,7 @@ app.factory('queueWatcher', ['uploadOptions', function (uploadOptions){
 			scope.curQueue = q;
 		};
 
+
 		$('#fileupload').bind('fileuploadadd', function (e, data) {
 			if (scope.curQueue.length > 0) {
 				scope.curQueue[0].$cancel();
@@ -74,7 +75,11 @@ app.config(
 				})
 				.otherwise({ redirectTo: '/' });
 
-			delete $httpProvider.defaults.headers.common['X-Requested-With'];
+			delete $httpProvider.defaults.headers.common["X-Requested-With"];
+			fileUploadProvider.defaults.redirect = window.location.href.replace(
+                /\/[^\/]*$/,
+                '/cors/result.html?%s'
+            );
 			angular.extend(fileUploadProvider.defaults, {
 				disableImageResize: /Android(?!.*Chrome)|Opera/
 					.test(window.navigator.userAgent),

@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var useref = require('gulp-useref');
 var connect = require('gulp-connect');
+var uglify = require('gulp-uglify');
+var gulpif = require('gulp-if');
+var minifyCss = require('gulp-minify-css');
 
 gulp.task('default', ['ur', 'copy']);
 
@@ -9,6 +12,8 @@ gulp.task('ur', function () {
     
     return gulp.src('app/index.html')
         .pipe(assets)
+        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.css', minifyCss()))
         .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest('dist'));
@@ -26,7 +31,9 @@ gulp.task('copy', function() {
 	gulp.src('app/server/**/**/*')
 		.pipe(gulp.dest('dist/server'));
 	gulp.src('app/server/php/files/.htaccess')
-		.pipe(gulp.dest('dist/server/php/files'))
+		.pipe(gulp.dest('dist/server/php/files'));
+	gulp.src('app/js/cors/*')
+		.pipe(gulp.dest('dist/js/cors'));
 	
 });
 
