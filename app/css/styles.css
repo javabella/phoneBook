@@ -325,7 +325,7 @@ tbody > tr {
 }
 
 .list-inline li {
-    margin: 0 16px 6px 0;
+    margin: 0 15px 6px 0;
 
     cursor: pointer;
     vertical-align: top;
